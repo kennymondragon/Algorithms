@@ -1,4 +1,5 @@
 import time
+import copy
 import Auxiliary.Auxiliary as Auxiliary
 ######################## Bubble Sort ##############################
 def bubbleSort(rects):
@@ -99,52 +100,109 @@ def partition(rects, lo, hi):
 
 
 ######################## Merge Sort ##############################
-#def merge(rects, lo, mid, hi):
-#    print("merge()")
-#    i = lo
-#    j = mid+1
-#    aux = rects
+# def merge(rects, lo, mid, hi, aux):
+#     print("merge()")
+#     i = lo
+#     j = mid+1
 
-#    for k in range(lo, hi):
-#        aux[k] = rects[k]
-    
-#    for k in range(lo, hi):
-#        time.sleep(Auxiliary.TIMEDELAY)
-#        if (i > mid):
-#            pos = rects[k].pos
-#            rects[k] = aux[j]
-#            rects[k].moveX(pos[0])
-#            j += 1
-#        elif (j > hi):
-#            pos = rects[k].pos
-#            rects[k] = aux[i]
-#            rects[k].moveX(pos[0])
-#            i += 1
-#        elif (aux[j].height < aux[i].height):
-#            pos = rects[k].pos
-#            rects[k] = aux[j]
-#            rects[k].moveX(pos[0])
-#            j += 1
-#        else:
-#            pos = rects[k].pos
-#            rects[k] = aux[i]
-#            rects[k].moveX(pos[0])
-#            i += 1
+#     #for k in range(lo, hi):
+#     #    aux[k] = rects[k]
+#     aux[lo:hi] = rects[lo:hi].copy()
 
-#def sort(rects, lo, hi):
-#    print("sort()")
-#    print("lo: {0}".format(str(lo)))
-#    print("hi: {0}".format(str(hi)))
-#    if (hi <= lo):
-#        return
-#    mid = lo + (hi - lo) // 2
-#    sort(rects, lo, mid)
-#    sort(rects, mid+1, hi)
-#    merge(rects, lo, mid, hi)
+#     for k in range(lo, hi):
+#         time.sleep(Auxiliary.TIMEDELAY+1)
+#         if (i > mid):
+#             pos = rects[k].pos
+#             rects[k] = aux[j]
+#             rects[k].moveX(pos[0])
+#             j += 1
+#         elif (j > hi):
+#             pos = rects[k].pos
+#             rects[k] = aux[i]
+#             rects[k].moveX(pos[0])
+#             i += 1
+#         elif (aux[j].height < aux[i].height):
+#             pos = rects[k].pos
+#             rects[k] = aux[j]
+#             rects[k].moveX(pos[0])
+#             j += 1
+#         else:
+#             pos = rects[k].pos
+#             rects[k] = aux[i]
+#             rects[k].moveX(pos[0])
+#             i += 1
 
-#def mergeSort(rects):
-#    print("mergeSort()")
-#    aux = rects
-#    sort(rects, 0, len(rects)-1)
-#    for rect in rects:
-#        print(rect.height)
+# def sort(rects, lo, hi, aux):
+#     print("sort()")
+#     print("lo: {0}".format(str(lo)))
+#     print("hi: {0}".format(str(hi)))
+#     if (hi <= lo):
+#         return
+#     mid = lo + (hi - lo) // 2
+#     sort(rects, lo, mid, aux)
+#     sort(rects, mid+1, hi, aux)
+#     merge(rects, lo, mid, hi, aux)
+
+# def mergeSort(rects):
+#     print("mergeSort()")
+#     aux = (rects.copy())
+#     sort(rects, 0, len(rects)-1, aux)
+#     for rect in rects:
+#         print(rect.height)
+
+def mergeSort(arr):
+    if len(arr) > 1:
+ 
+         # Finding the mid of the array
+        mid = len(arr)//2
+ 
+        # Dividing the array elements
+        L = arr[:mid].copy()
+ 
+        # into 2 halves
+        R = arr[mid:].copy()
+ 
+        # Sorting the first half
+        mergeSort(L)
+ 
+        # Sorting the second half
+        mergeSort(R)
+ 
+        i = j = k = 0
+ 
+        # Copy data to temp arrays L[] and R[]
+        while i < len(L) and j < len(R):
+            if L[i].height <= R[j].height:
+                arr[k].setColor('cyan')
+                time.sleep(Auxiliary.TIMEDELAY+1)
+                pos = arr[k].pos
+                arr[k] = L[i]
+                arr[k].moveX(pos[0])
+                i += 1
+            else:
+                arr[k].setColor('cyan')
+                time.sleep(Auxiliary.TIMEDELAY+1)
+                pos = arr[k].pos
+                arr[k] = R[j]
+                arr[k].moveX(pos[0])
+                j += 1
+            k += 1
+ 
+        # Checking if any element was left
+        while i < len(L):
+            arr[k].setColor('cyan')
+            time.sleep(Auxiliary.TIMEDELAY+1)
+            pos = arr[k].pos
+            arr[k] = L[i]
+            arr[k].moveX(pos[0])
+            i += 1
+            k += 1
+ 
+        while j < len(R):
+            arr[k].setColor('cyan')
+            time.sleep(Auxiliary.TIMEDELAY+1)
+            pos = arr[k].pos
+            arr[k] = R[j]
+            arr[k].moveX(pos[0])
+            j += 1
+            k += 1
